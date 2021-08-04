@@ -85,6 +85,7 @@ IndentWidth:     2
 IndentWrappedFunctionNames: false
 JavaScriptQuotes: Leave
 JavaScriptWrapImports: true
+JavaImportGroups: ['android', 'com.facebook.react', 'de.blinkt.openvpn', 'java']
 KeepEmptyLinesAtTheStartOfBlocks: true
 MacroBlockBegin: ''
 MacroBlockEnd:   ''
