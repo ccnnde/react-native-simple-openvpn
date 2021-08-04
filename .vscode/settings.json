@@ -1,0 +1,14 @@
+{
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "files.associations": { "*.h": "objective-c" },
+  "[java]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "[objective-c]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "clang-format.executable": "${workspaceRoot}/node_modules/.bin/clang-format"
+}

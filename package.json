@@ -29,5 +29,8 @@
   },
   "license": "MIT",
   "licenseFilename": "LICENSE",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "clang-format": "^1.4.0"
+  }
 }
