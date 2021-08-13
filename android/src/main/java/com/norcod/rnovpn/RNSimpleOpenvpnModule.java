@@ -44,6 +44,14 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
   private OpenVPNThread vpnThread = new OpenVPNThread();
   private VpnProfile vpnProfile;
 
+  private enum VpnState {
+    VPN_STATE_DISCONNECTED,
+    VPN_STATE_CONNECTING,
+    VPN_STATE_CONNECTED,
+    VPN_STATE_DISCONNECTING,
+    VPN_OTHER_STATE,
+  }
+
   private static ReactApplicationContext reactContext;
 
   public RNSimpleOpenvpnModule(ReactApplicationContext context) {
@@ -60,13 +68,13 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
   @Override
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
-    final Map<String, Object> VpnState = new HashMap<>();
+    final Map<String, Object> vpnState = new HashMap<>();
 
-    for (ConnectionStatus status : ConnectionStatus.values()) {
-      VpnState.put(status.toString(), status.ordinal());
+    for (VpnState state : VpnState.values()) {
+      vpnState.put(state.toString(), state.ordinal());
     }
 
-    constants.put("VpnState", VpnState);
+    constants.put("VpnState", vpnState);
     return constants;
   }
 
@@ -188,8 +196,33 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
   @Override
   public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
     WritableMap params = Arguments.createMap();
-    params.putInt("state", level.ordinal());
+    params.putInt("state", getVpnState(level));
     params.putString("message", state);
+    params.putString("level", level.toString());
     sendEvent("stateChanged", params);
+  }
+
+  private int getVpnState(ConnectionStatus level) {
+    VpnState state;
+
+    switch (level) {
+      case LEVEL_NOTCONNECTED:
+        state = VpnState.VPN_STATE_DISCONNECTED;
+        break;
+      case LEVEL_START:
+      case LEVEL_WAITING_FOR_USER_INPUT:
+      case LEVEL_CONNECTING_NO_SERVER_REPLY_YET:
+      case LEVEL_CONNECTING_SERVER_REPLIED:
+        state = VpnState.VPN_STATE_CONNECTING;
+        break;
+      case LEVEL_CONNECTED:
+        state = VpnState.VPN_STATE_CONNECTED;
+        break;
+      default:
+        state = VpnState.VPN_OTHER_STATE;
+        break;
+    }
+
+    return state.ordinal();
   }
 }
