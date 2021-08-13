@@ -1,16 +1,179 @@
-// RNSimpleOpenvpn.m
-
 #import "RNSimpleOpenvpn.h"
 
+NSString *const RN_OPEN_VPN = @"RNSimpleOpenvpn";
+NSString *const STATE_CHANGED_EVENT = @"stateChanged";
+
+typedef NS_ENUM(NSInteger, VpnState) {
+  VpnStateDisconnected,
+  VpnStateConnecting,
+  VpnStateConnected,
+  VpnStateDisconnecting,
+  VpnOtherState,
+};
 
 @implementation RNSimpleOpenvpn
 
-RCT_EXPORT_MODULE()
+RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(sampleMethod:(NSString *)stringArgument numberParameter:(nonnull NSNumber *)numberArgument callback:(RCTResponseSenderBlock)callback)
-{
-    // TODO: Implement some actually useful functionality
-    callback(@[[NSString stringWithFormat: @"numberArgument: %@ stringArgument: %@", numberArgument, stringArgument]]);
++ (BOOL)requiresMainQueueSetup {
+  return YES;
+}
+
+- (NSDictionary *)constantsToExport {
+  return @{
+    @"VpnState" : @{
+      @"VPN_STATE_DISCONNECTED" : @(VpnStateDisconnected),
+      @"VPN_STATE_CONNECTING" : @(VpnStateConnecting),
+      @"VPN_STATE_CONNECTED" : @(VpnStateConnected),
+      @"VPN_STATE_DISCONNECTING" : @(VpnStateDisconnecting),
+      @"VPN_OTHER_STATE" : @(VpnOtherState),
+    }
+  };
+};
+
+- (NSArray<NSString *> *)supportedEvents {
+  return @[ STATE_CHANGED_EVENT ];
+}
+
+RCT_EXPORT_METHOD(connect
+                  : (NSDictionary *)options resolver
+                  : (RCTPromiseResolveBlock)resolve rejecter
+                  : (RCTPromiseRejectBlock)reject) {
+  self.ovpnOptions = options;
+  [self prepareVpn:resolve rejecter:reject];
+}
+
+RCT_EXPORT_METHOD(disconnect : (RCTPromiseResolveBlock)resolve rejecter : (RCTPromiseRejectBlock)reject) {
+  [self.providerManager.connection stopVPNTunnel];
+  resolve(nil);
+}
+
+- (void)prepareVpn:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject {
+  [NETunnelProviderManager loadAllFromPreferencesWithCompletionHandler:^(
+                               NSArray<NETunnelProviderManager *> *_Nullable managers, NSError *_Nullable error) {
+    if (error) {
+      reject(@"E_PREPARE_ERRROR", @"Prepare VPN failed", error);
+      return;
+    }
+
+    self.providerManager = managers.firstObject ? managers.firstObject : [NETunnelProviderManager new];
+    [self startVpn:resolve rejecter:reject];
+  }];
+}
+
+- (void)startVpn:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject {
+  NSString *const ovpnFileName = self.ovpnOptions[@"ovpnFileName"] ? self.ovpnOptions[@"ovpnFileName"] : @"client";
+  NSString *const providerBundleIdentifier = self.ovpnOptions[@"providerBundleIdentifier"];
+  NSString *const localizedDescription =
+      self.ovpnOptions[@"localizedDescription"] ? self.ovpnOptions[@"localizedDescription"] : RN_OPEN_VPN;
+
+  if (providerBundleIdentifier == nil) {
+    reject(@"E_NO_BUNDLE_ERROR", @"There are no bundle identifier", nil);
+    return;
+  }
+
+  NSURL *url = [[NSBundle mainBundle] URLForResource:ovpnFileName withExtension:@"ovpn"];
+
+  if (url == nil) {
+    reject(@"E_NO_OVPN_FILE_ERROR", @"There are no ovpn file", nil);
+    return;
+  }
+
+  NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+
+  NETunnelProviderProtocol *tunel = [NETunnelProviderProtocol new];
+  tunel.providerConfiguration = @{@"ovpn" : data};
+  tunel.providerBundleIdentifier = providerBundleIdentifier;
+  tunel.serverAddress = @"";
+  tunel.disconnectOnSleep = NO;
+
+  self.providerManager.localizedDescription = localizedDescription;
+  [self.providerManager setEnabled:YES];
+  [self.providerManager setProtocolConfiguration:tunel];
+  [self.providerManager saveToPreferencesWithCompletionHandler:^(NSError *error) {
+    if (error) {
+      reject(@"E_SAVE_PREFERENCE_ERROR", @"Provider Manager save preferences failed", error);
+      return;
+    }
+
+    [self.providerManager loadFromPreferencesWithCompletionHandler:^(NSError *_Nullable error) {
+      if (error) {
+        reject(@"E_LOAD_PREFERENCE_ERROR", @"Provider Manager load preferences failed", error);
+      } else {
+        NSError *error = nil;
+        NSString *const remoteAddress = self.ovpnOptions[@"remoteAddress"] ? self.ovpnOptions[@"remoteAddress"] : @"";
+
+        [self.providerManager.connection
+            startVPNTunnelWithOptions:@{@"username" : @"", @"password" : @"", @"remote" : remoteAddress}
+                       andReturnError:&error];
+
+        if (error) {
+          reject(@"E_START_VPN_ERROR", @"Start VPN failed", error);
+          return;
+        }
+
+        resolve(nil);
+      }
+    }];
+  }];
+}
+
+RCT_EXPORT_METHOD(observeState : (RCTPromiseResolveBlock)resolve rejecter : (RCTPromiseRejectBlock)reject) {
+  NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+
+  self.vpnStateObserver = [center addObserverForName:NEVPNStatusDidChangeNotification
+                                              object:nil
+                                               queue:nil
+                                          usingBlock:^(NSNotification *notification) {
+                                            NEVPNConnection *nevpnConnection = (NEVPNConnection *)notification.object;
+                                            [self sendEventWithName:STATE_CHANGED_EVENT
+                                                               body:[self getVpnState:nevpnConnection.status]];
+                                          }];
+
+  resolve(nil);
+}
+
+RCT_EXPORT_METHOD(stopObserveState : (RCTPromiseResolveBlock)resolve rejecter : (RCTPromiseRejectBlock)reject) {
+  NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+  [center removeObserver:self.vpnStateObserver];
+  resolve(nil);
+}
+
+- (NSDictionary *)getVpnState:(NEVPNStatus)status {
+  VpnState state;
+  NSString *message;
+
+  switch (status) {
+    case NEVPNStatusDisconnected:
+      state = VpnStateDisconnected;
+      message = @"The VPN is disconnected";
+      break;
+    case NEVPNStatusConnecting:
+      state = VpnStateConnecting;
+      message = @"The VPN is in the process of connecting";
+      break;
+    case NEVPNStatusConnected:
+      state = VpnStateConnected;
+      message = @"The VPN is connected";
+      break;
+    case NEVPNStatusDisconnecting:
+      state = VpnStateDisconnecting;
+      message = @"The VPN is in the process of disconnecting";
+      break;
+    case NEVPNStatusReasserting:
+      state = VpnOtherState;
+      message = @"The VPN is in the process of reconnecting";
+      break;
+    case NEVPNStatusInvalid:
+      state = VpnOtherState;
+      message = @"The VPN configuration does not exist in the Network Extension preferences or is not enabled";
+      break;
+    default:
+      state = VpnOtherState;
+      message = @"The VPN State is unknown";
+  }
+
+  return @{@"state" : @(state), @"message" : message};
 }
 
 @end
