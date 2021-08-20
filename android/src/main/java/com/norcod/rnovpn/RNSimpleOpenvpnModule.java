@@ -8,6 +8,7 @@ import android.net.VpnService;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.BaseActivityEventListener;
 import com.facebook.react.bridge.Promise;
@@ -43,6 +44,23 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
   private static final int START_VPN_PROFILE = 70;
   private OpenVPNThread vpnThread = new OpenVPNThread();
   private VpnProfile vpnProfile;
+  private Promise vpnPromise;
+
+  private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
+    @Override
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
+      if (requestCode == START_VPN_PROFILE) {
+        if (vpnPromise != null) {
+          if (resultCode == RESULT_OK) {
+            startVpn(vpnPromise);
+          } else {
+            vpnPromise.reject("E_PREPARE_ERROR", "Prepare VPN failed");
+            vpnPromise = null;
+          }
+        }
+      }
+    }
+  };
 
   private enum VpnState {
     VPN_STATE_DISCONNECTED,
@@ -57,6 +75,7 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
   public RNSimpleOpenvpnModule(ReactApplicationContext context) {
     super(context);
     reactContext = context;
+    reactContext.addActivityEventListener(mActivityEventListener);
     VpnStatus.addStateListener(this);
   }
 
@@ -110,25 +129,15 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
       return;
     }
 
+    vpnPromise = promise;
     Intent intent = VpnService.prepare(currentActivity);
 
     if (intent != null) {
-      reactContext.addActivityEventListener(new BaseActivityEventListener() {
-        @Override
-        public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
-          if (resultCode == RESULT_OK && requestCode == START_VPN_PROFILE) {
-            startVpn(promise);
-          } else {
-            promise.reject("E_PREPARE_ERRROR", "Prepare VPN failed");
-          }
-        }
-      });
-
       currentActivity.startActivityForResult(intent, START_VPN_PROFILE);
       return;
     }
 
-    startVpn(promise);
+    startVpn(vpnPromise);
   }
 
   private void startVpn(Promise promise) {
@@ -162,6 +171,7 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
       }
     } catch (Exception e) {
       promise.reject("E_READ_OVPN_CONFIG_ERROR", "Read ovpn config failed: " + e.toString());
+      promise = null;
       return;
     }
 
@@ -182,6 +192,8 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
     } catch (Exception e) {
       promise.reject("E_LOAD_OVPN_PROFILE_ERROR", "Load ovpn profile failed: " + e.toString());
     }
+
+    promise = null;
   }
 
   private String getModifiedOvpnConfig(String ovpnConfig, String remoteAddress) {
