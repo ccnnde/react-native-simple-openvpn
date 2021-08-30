@@ -32,6 +32,7 @@
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "clang-format": "^1.4.0"
+    "clang-format": "^1.4.0",
+    "prettier": "^2.3.2"
   }
 }

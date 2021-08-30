@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+.idea
+.editorconfig
+.npmrc
+package-lock.json
+yarn.lock
+node_modules/
+android/
+ios/
+
+# Ignored suffix
+*.log
+*.svg
+*.png
+*ignore
