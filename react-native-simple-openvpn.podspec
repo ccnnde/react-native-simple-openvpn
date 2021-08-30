@@ -10,10 +10,7 @@ Pod::Spec.new do |s|
                   react-native-simple-openvpn
                    DESC
   s.homepage     = "https://github.com/ccnnde/react-native-simple-openvpn"
-  # brief license entry:
-  s.license      = "MIT"
-  # optional - use expanded license entry instead:
-  # s.license    = { :type => "MIT", :file => "LICENSE" }
+  s.license      = { :type => "GPLv2", :file => "LICENSE" }
   s.authors      = { "Nor Cod" => "norfecod@outlook.com" }
   s.platforms    = { :ios => "9.0" }
   s.source       = { :git => "https://github.com/ccnnde/react-native-simple-openvpn.git", :tag => "#{s.version}" }
@@ -22,6 +19,4 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.dependency "React"
-  # ...
-  # s.dependency "..."
 end

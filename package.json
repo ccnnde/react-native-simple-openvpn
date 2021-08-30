@@ -28,7 +28,7 @@
     "name": "Nor Cod",
     "email": "norfecod@outlook.com"
   },
-  "license": "MIT",
+  "license": "GPLv2",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "devDependencies": {
