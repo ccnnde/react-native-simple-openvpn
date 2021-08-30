@@ -22,7 +22,7 @@ declare namespace RNSimpleOpenvpn {
     VPN_STATE_CONNECTING,
     VPN_STATE_CONNECTED,
     VPN_STATE_DISCONNECTING,
-    VPN_OTHER_STATE
+    VPN_OTHER_STATE,
   }
 }
 
