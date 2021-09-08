@@ -9,6 +9,7 @@
     "README.md",
     "android",
     "index.js",
+    "index.d.ts",
     "ios",
     "react-native-simple-openvpn.podspec"
   ],
