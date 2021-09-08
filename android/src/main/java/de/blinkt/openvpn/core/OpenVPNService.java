@@ -452,8 +452,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         mOvpn3 = prefs.getBoolean("ovpn3", false);
-        if (!"ovpn3".equals(BuildConfig.FLAVOR))
-            mOvpn3 = false;
+        // if (!"ovpn3".equals(BuildConfig.FLAVOR))
+        //     mOvpn3 = false;
 
         // Open the Management Interface
         if (!mOvpn3) {

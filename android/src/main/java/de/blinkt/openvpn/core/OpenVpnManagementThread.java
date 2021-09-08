@@ -18,8 +18,6 @@ import android.util.Log;
 import com.norcod.rnovpn.BuildConfig;
 import com.norcod.rnovpn.R;
 
-import junit.framework.Assert;
-
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
@@ -413,7 +411,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             */
 
                 if (routeparts.length == 5) {
-                    if (BuildConfig.DEBUG) Assert.assertEquals("dev", routeparts[3]);
                     mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
                 } else if (routeparts.length >= 3) {
                     mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);
