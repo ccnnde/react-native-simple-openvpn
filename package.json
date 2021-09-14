@@ -30,7 +30,7 @@
     "name": "Nor Cod",
     "email": "norfecod@outlook.com"
   },
-  "license": "GPLv2",
+  "license": "GPL-2.0-or-later",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "devDependencies": {
