@@ -49,7 +49,7 @@ If using CocoaPods, run it in the `ios/` directory
 pod install
 ```
 
-See [iOS Guide](docs/iOS-Guide.zh-CN.md) for iOS side Network Extension configuration and OpenVPN integration
+See [iOS Guide](docs/iOS-Guide.md) for iOS side Network Extension configuration and OpenVPN integration
 
 ## Usage
 
