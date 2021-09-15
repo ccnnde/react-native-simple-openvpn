@@ -215,6 +215,11 @@ The following items were used in this project
 - Android - [ics-openvpn](https://github.com/schwabe/ics-openvpn), for personal project reasons, the Android side is currently using an older version of its core library
 - iOS - [OpenVPNAdapter](https://github.com/ss-abramchuk/OpenVPNAdapter) v0.8.0
 
+## Todo
+
+- [ ] Resolve RN 0.65 warning
+- [ ] Upgrade to the latest Android OpenVPN library
+
 ## License
 
 react-native-simple-openvpn is available under the GPLv2 license. See the [LICENSE](LICENSE) file for more information
