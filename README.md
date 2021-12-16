@@ -1,8 +1,9 @@
 # react-native-simple-openvpn
 
-[![npm version](https://img.shields.io/badge/npm-v1.0.0-brightgreen)](https://www.npmjs.com/package/react-native-simple-openvpn)
-![platforms](https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey)
-[![GNU General Public License](https://img.shields.io/badge/license-GPL%20v2-orange)](http://www.gnu.org/licenses/gpl-2.0.html)
+[![npm latest][version-img]][pkg-url]
+[![download][download-img]][pkg-url]
+![platforms][platform-img]
+[![GNU General Public License][license-img]](LICENSE)
 
 English | [简体中文](./README.zh-CN.md)
 
@@ -10,9 +11,9 @@ A simple react native module to interact with OpenVPN
 
 ## Versions
 
-| RNSimpleOpenvpn                                                     | React Native |
-| ------------------------------------------------------------------- | ------------ |
-| ![npm version](https://img.shields.io/badge/npm-v1.0.0-brightgreen) | 0.56 ~ 0.65  |
+| RNSimpleOpenvpn                                                                      | React Native |
+| ------------------------------------------------------------------------------------ | ------------ |
+| ![npm v1.0.0](https://img.shields.io/badge/npm-v1.0.0-brightgreen?style=flat-square) | 0.56 ~ 0.66  |
 
 ## Preview
 
@@ -50,6 +51,10 @@ pod install
 ```
 
 See [iOS Guide](docs/iOS-Guide.md) for iOS side Network Extension configuration and OpenVPN integration
+
+## Example
+
+[Example](./example/README.md)
 
 ## Usage
 
@@ -223,3 +228,11 @@ The following items were used in this project
 ## License
 
 react-native-simple-openvpn is available under the GPLv2 license. See the [LICENSE](LICENSE) file for more information
+
+<!-- badge url -->
+
+[pkg-url]: https://www.npmjs.com/package/react-native-simple-openvpn
+[version-img]: https://img.shields.io/npm/v/react-native-simple-openvpn?color=deepgreen&style=flat-square
+[download-img]: https://img.shields.io/npm/dm/react-native-simple-openvpn?style=flat-square
+[platform-img]: https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey?style=flat-square
+[license-img]: https://img.shields.io/badge/license-GPL%20v2-orange?style=flat-square

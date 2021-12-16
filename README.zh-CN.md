@@ -1,8 +1,9 @@
 # react-native-simple-openvpn
 
-[![npm version](https://img.shields.io/badge/npm-v1.0.0-brightgreen)](https://www.npmjs.com/package/react-native-simple-openvpn)
-![platforms](https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey)
-[![GNU General Public License](https://img.shields.io/badge/license-GPL%20v2-orange)](http://www.gnu.org/licenses/gpl-2.0.html)
+[![npm latest][version-img]][pkg-url]
+[![download][download-img]][pkg-url]
+![platforms][platform-img]
+[![GNU General Public License][license-img]](LICENSE)
 
 简体中文 | [English](./README.md)
 
@@ -10,9 +11,9 @@ A simple react native module to interact with OpenVPN
 
 ## 版本
 
-| RNSimpleOpenvpn                                                     | React Native |
-| ------------------------------------------------------------------- | ------------ |
-| ![npm version](https://img.shields.io/badge/npm-v1.0.0-brightgreen) | 0.56 ~ 0.65  |
+| RNSimpleOpenvpn                                                                      | React Native |
+| ------------------------------------------------------------------------------------ | ------------ |
+| ![npm v1.0.0](https://img.shields.io/badge/npm-v1.0.0-brightgreen?style=flat-square) | 0.56 ~ 0.66  |
 
 ## 预览
 
@@ -50,6 +51,10 @@ pod install
 ```
 
 iOS 端 Network Extension 配置以及 OpenVPN 的集成请参阅 [iOS 指南](docs/iOS-Guide.zh-CN.md)
+
+## 示例
+
+[项目示例](./example/README.md)
 
 ## 用法
 
@@ -218,3 +223,11 @@ remote <IP address> <port>
 ## License
 
 react-native-simple-openvpn 是在 GPLv2 许可证下提供的。参见 [LICENSE](LICENSE) 文件以了解更多信息
+
+<!-- badge url -->
+
+[pkg-url]: https://www.npmjs.com/package/react-native-simple-openvpn
+[version-img]: https://img.shields.io/npm/v/react-native-simple-openvpn?color=deepgreen&style=flat-square
+[download-img]: https://img.shields.io/npm/dm/react-native-simple-openvpn?style=flat-square
+[platform-img]: https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey?style=flat-square
+[license-img]: https://img.shields.io/badge/license-GPL%20v2-orange?style=flat-square
