@@ -144,6 +144,7 @@ export default App;
 ```ts
 interface VpnOptions {
   remoteAddress?: string;
+  ovpnString?: string;
   ovpnFileName?: string;
   assetsPath?: string;
   providerBundleIdentifier: string;
@@ -154,6 +155,12 @@ interface VpnOptions {
 #### remoteAddress
 
 VPN server address, the format is `<ip> <port>`, use the address in the configuration file of `xxx.ovpn` when it is not passed in
+
+#### ovpnString
+
+The string format of the content of the OpenVPN configuration file. When it is not passed in or an empty string `''` is passed, the module will look for the `xxx.ovpn` configuration file string format
+
+String format reference [example.ovpn](example/android/app/src/main/assets/Japan.ovpn)
 
 #### ovpnFileName
 
@@ -188,7 +195,7 @@ interface VpnEventParams {
 
 ### `xxx.ovpn` configuration file
 
-Don't forget to add the configuration file to your project
+If you don’t use [ovpnString](#ovpnstring), don’t forget to add the configuration file to your project
 
 - The Android path is `android/app/src/main/assets/`，create a new `assets` folder if you don't have one
 - The iOS path is the main bundle, just drag and drop the file into the project
@@ -227,7 +234,7 @@ The following items were used in this project
 
 ## License
 
-react-native-simple-openvpn is available under the GPLv2 license. See the [LICENSE](LICENSE) file for more information
+[GPLv2](LICENSE) © Nor Cod
 
 <!-- badge url -->
 

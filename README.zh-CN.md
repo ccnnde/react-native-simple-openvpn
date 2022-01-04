@@ -144,6 +144,7 @@ export default App;
 ```ts
 interface VpnOptions {
   remoteAddress?: string;
+  ovpnString?: string;
   ovpnFileName?: string;
   assetsPath?: string;
   providerBundleIdentifier: string;
@@ -154,6 +155,12 @@ interface VpnOptions {
 #### remoteAddress
 
 VPN 服务端地址，格式为 `<ip> <port>`，未传入时使用 `xxx.ovpn` 配置文件中的地址
+
+#### ovpnString
+
+OpenVPN 配置文件内容的字符串形式，未传入时或传递空字符串 `''`，模块将寻找 `xxx.ovpn` 配置文件
+
+字符串格式参考 [example.ovpn](example/android/app/src/main/assets/Japan.ovpn)
 
 #### ovpnFileName
 
@@ -188,7 +195,7 @@ interface VpnEventParams {
 
 ### `xxx.ovpn` 配置文件
 
-不要忘记将配置文件添加你的项目中
+如果你不使用 [ovpnString](#ovpnstring)，不要忘记将配置文件添加你的项目中
 
 - Android 路径 `android/app/src/main/assets/`，没有 `assets` 文件夹就新建一个
 - iOS 路径为 main bundle，将文件拖拽到工程下即可
@@ -222,7 +229,7 @@ remote <IP address> <port>
 
 ## License
 
-react-native-simple-openvpn 是在 GPLv2 许可证下提供的。参见 [LICENSE](LICENSE) 文件以了解更多信息
+[GPLv2](LICENSE) © Nor Cod
 
 <!-- badge url -->
 

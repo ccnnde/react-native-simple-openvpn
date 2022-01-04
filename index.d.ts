@@ -19,6 +19,7 @@
 
 interface VpnOptions {
   remoteAddress?: string;
+  ovpnString?: string;
   ovpnFileName?: string;
   assetsPath?: string;
   providerBundleIdentifier: string;

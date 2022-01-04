@@ -164,22 +164,9 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
 
     try {
       String remoteAddress = ovpnOptions.getOrDefault("remoteAddress", "").toString();
-      String assetsPath = ovpnOptions.getOrDefault("assetsPath", "").toString();
-      String ovpnFileName = ovpnOptions.getOrDefault("ovpnFileName", "client").toString();
-      String ovpnFilePath = assetsPath + ovpnFileName + ".ovpn";
+      String ovpnString = ovpnOptions.getOrDefault("ovpnString", "").toString();
 
-      InputStream conf = reactContext.getAssets().open(ovpnFilePath);
-      InputStreamReader isr = new InputStreamReader(conf);
-      BufferedReader br = new BufferedReader(isr);
-      String line;
-
-      while (true) {
-        line = br.readLine();
-        if (line == null) {
-          break;
-        }
-        config += line + "\n";
-      }
+      config = ovpnString.isEmpty() ? getOvpnFileContent() : ovpnString;
 
       if (config.isEmpty()) {
         throw new Exception("ovpn config is empty");
@@ -213,6 +200,28 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
     }
 
     promise = null;
+  }
+
+  private String getOvpnFileContent() throws Exception {
+    String content = "";
+    String assetsPath = ovpnOptions.getOrDefault("assetsPath", "").toString();
+    String ovpnFileName = ovpnOptions.getOrDefault("ovpnFileName", "client").toString();
+    String ovpnFilePath = assetsPath + ovpnFileName + ".ovpn";
+
+    InputStream conf = reactContext.getAssets().open(ovpnFilePath);
+    InputStreamReader isr = new InputStreamReader(conf);
+    BufferedReader br = new BufferedReader(isr);
+    String line;
+
+    while (true) {
+      line = br.readLine();
+      if (line == null) {
+        break;
+      }
+      content += line + "\n";
+    }
+
+    return content;
   }
 
   private String getModifiedOvpnConfig(String ovpnConfig, String remoteAddress) {
