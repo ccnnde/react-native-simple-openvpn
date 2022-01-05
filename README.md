@@ -11,9 +11,9 @@ A simple react native module to interact with OpenVPN
 
 ## Versions
 
-| RNSimpleOpenvpn                                                                      | React Native |
-| ------------------------------------------------------------------------------------ | ------------ |
-| ![npm v1.0.0](https://img.shields.io/badge/npm-v1.0.0-brightgreen?style=flat-square) | 0.56 ~ 0.66  |
+| RNSimpleOpenvpn | React Native |
+| --------------- | ------------ |
+| 1.0.0 ~ 1.1.0   | 0.56 ~ 0.66  |
 
 ## Preview
 
