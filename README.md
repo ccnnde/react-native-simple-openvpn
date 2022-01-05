@@ -229,7 +229,7 @@ The following items were used in this project
 
 ## Todo
 
-- [ ] Resolve RN 0.65 warning
+- [x] Resolve RN 0.65 warning
 - [ ] Upgrade to the latest Android OpenVPN library
 
 ## License

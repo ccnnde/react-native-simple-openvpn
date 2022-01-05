@@ -125,6 +125,16 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
   }
 
   @ReactMethod
+  public void addListener(String eventName) {
+    // Set up any upstream listeners or background tasks as necessary
+  }
+
+  @ReactMethod
+  public void removeListeners(Integer count) {
+    // Remove upstream listeners, stop unnecessary background tasks
+  }
+
+  @ReactMethod
   public void connect(ReadableMap options, Promise promise) {
     ovpnOptions = options.toHashMap();
     prepareVpn(promise);
