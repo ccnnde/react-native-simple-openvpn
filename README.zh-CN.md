@@ -13,7 +13,7 @@ A simple react native module to interact with OpenVPN
 
 | RNSimpleOpenvpn | React Native |
 | --------------- | ------------ |
-| 1.0.0 ~ 1.1.0   | 0.56 ~ 0.66  |
+| 1.0.0 ~ 1.2.0   | 0.56 ~ 0.66  |
 
 ## 预览
 
@@ -51,6 +51,37 @@ pod install
 ```
 
 iOS 端 Network Extension 配置以及 OpenVPN 的集成请参阅 [iOS 指南](docs/iOS-Guide.zh-CN.md)
+
+#### 后台退出 App 时关闭 VPN 连接
+
+在项目的 `AppDelegate.m` 中添加以下代码：
+
+```diff
++ #import "RNSimpleOpenvpn.h"
+
+@implementation AppDelegate
+
+// ...
+
++ - (void)applicationWillTerminate:(UIApplication *)application
++ {
++   [RNSimpleOpenvpn dispose];
++ }
+
+@end
+```
+
+请确保 Build Settings 的 Header Search Paths 包含以下路径：
+
+```txt
+$(SRCROOT)/../node_modules/react-native-simple-openvpn/ios
+```
+
+或者, 如果你使用 CocoaPods 的话，Header Search Paths 应该会自动包含以下路径：
+
+```txt
+"${PODS_ROOT}/Headers/Public/react-native-simple-openvpn"
+```
 
 ## 示例
 

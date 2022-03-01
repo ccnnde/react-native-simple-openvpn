@@ -1,7 +1,7 @@
 {
   "name": "react-native-simple-openvpn",
   "title": "React Native Simple Openvpn",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "React Native Open VPN Module",
   "main": "index.js",
   "types": "index.d.ts",
