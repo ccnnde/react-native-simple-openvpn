@@ -29,4 +29,6 @@
 
 @property(strong, nonatomic) NSObject *vpnStateObserver;
 
++ (void)dispose;
+
 @end

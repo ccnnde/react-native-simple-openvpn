@@ -34,6 +34,14 @@ typedef NS_ENUM(NSInteger, VpnState) {
 
 RCT_EXPORT_MODULE();
 
+static NETunnelProviderManager *_cachedManager;
+
++ (void)dispose {
+  if (_cachedManager) {
+    [_cachedManager.connection stopVPNTunnel];
+  }
+}
+
 + (BOOL)requiresMainQueueSetup {
   return YES;
 }
@@ -64,6 +72,7 @@ RCT_EXPORT_METHOD(connect
 
 RCT_EXPORT_METHOD(disconnect : (RCTPromiseResolveBlock)resolve rejecter : (RCTPromiseRejectBlock)reject) {
   [self.providerManager.connection stopVPNTunnel];
+  _cachedManager = nil;
   resolve(nil);
 }
 
@@ -76,6 +85,7 @@ RCT_EXPORT_METHOD(disconnect : (RCTPromiseResolveBlock)resolve rejecter : (RCTPr
     }
 
     self.providerManager = managers.firstObject ? managers.firstObject : [NETunnelProviderManager new];
+    _cachedManager = self.providerManager;
     [self startVpn:resolve rejecter:reject];
   }];
 }
