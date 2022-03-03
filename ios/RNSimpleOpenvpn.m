@@ -138,9 +138,11 @@ RCT_EXPORT_METHOD(disconnect : (RCTPromiseResolveBlock)resolve rejecter : (RCTPr
       } else {
         NSError *error = nil;
         NSString *const remoteAddress = self.ovpnOptions[@"remoteAddress"] ? self.ovpnOptions[@"remoteAddress"] : @"";
+        NSString *const password = self.ovpnOptions[@"password"] ? self.ovpnOptions[@"password"] : @"";
+        NSString *const username = self.ovpnOptions[@"username"] ? self.ovpnOptions[@"username"] : @"";
 
         [self.providerManager.connection
-            startVPNTunnelWithOptions:@{@"username" : @"", @"password" : @"", @"remote" : remoteAddress}
+            startVPNTunnelWithOptions:@{@"username" : username, @"password" : password, @"remote" : remoteAddress}
                        andReturnError:&error];
 
         if (error) {

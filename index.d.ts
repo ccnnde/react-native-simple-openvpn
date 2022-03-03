@@ -24,6 +24,8 @@ interface VpnOptions {
   assetsPath?: string;
   providerBundleIdentifier: string;
   localizedDescription?: string;
+  username?: string;
+  password?: string;
 }
 
 interface VpnEventParams {
