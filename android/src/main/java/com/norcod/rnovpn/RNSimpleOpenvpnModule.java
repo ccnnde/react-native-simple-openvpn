@@ -194,13 +194,13 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
     ConfigParser cp = new ConfigParser();
 
     try {
-      // String username = ovpnOptions.getOrDefault("username", "").toString();
-      // String password = ovpnOptions.getOrDefault("password", "").toString();
+      String username = ovpnOptions.getOrDefault("username", "").toString();
+      String password = ovpnOptions.getOrDefault("password", "").toString();
 
       cp.parseConfig(new StringReader(config));
       vpnProfile = cp.convertProfile();
-      // vpnProfile.mUsername = username;
-      // vpnProfile.mPassword = password;
+      vpnProfile.mUsername = username;
+      vpnProfile.mPassword = password;
 
       ProfileManager.setTemporaryProfile(vpnProfile);
       VPNLaunchHelper.startOpenVpn(vpnProfile, reactContext);
