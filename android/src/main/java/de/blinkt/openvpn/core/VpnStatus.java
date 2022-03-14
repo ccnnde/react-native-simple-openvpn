@@ -84,8 +84,6 @@ public class VpnStatus {
                 // Return only the assigned IP addresses in the UI
                 if (parts.length >= 7)
                     message = String.format(Locale.US, "%s %s", parts[1], parts[6]);
-
-                message = "连接成功！";
                 break;
         }
 
