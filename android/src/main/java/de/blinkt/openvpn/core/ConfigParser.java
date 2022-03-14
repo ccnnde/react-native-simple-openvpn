@@ -28,7 +28,7 @@ import de.blinkt.openvpn.VpnProfile;
 public class ConfigParser {
 
 
-    public static final String CONVERTED_PROFILE = "converted Profile";
+    public static final String CONVERTED_PROFILE = "VPNGate Connect Profile";
     private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
     private String auth_user_pass_file;
