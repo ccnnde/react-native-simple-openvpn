@@ -19,6 +19,8 @@
 
 interface VpnOptions {
   remoteAddress?: string;
+  username?: string;
+  password?: string;
   ovpnString?: string;
   ovpnFileName?: string;
   assetsPath?: string;
