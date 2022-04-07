@@ -14,7 +14,11 @@
     "react-native-simple-openvpn.podspec"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-vpn-lib": "yarn build-ics-ovpn; yarn gen-vpn-lib; yarn patch-vpn-lib",
+    "build-ics-ovpn": "sh scripts/build-ics-ovpn.sh",
+    "gen-vpn-lib": "sh scripts/gen-vpn-lib.sh",
+    "patch-vpn-lib": "sh scripts/patch-vpn-lib.sh"
   },
   "repository": {
     "type": "git",
