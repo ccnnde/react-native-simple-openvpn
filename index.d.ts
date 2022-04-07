@@ -22,6 +22,9 @@ interface VpnOptions {
   ovpnString?: string;
   ovpnFileName?: string;
   assetsPath?: string;
+  notificationTitle?: string;
+  compatMode?: RNSimpleOpenvpn.CompatMode;
+  useLegacyProvider?: boolean;
   providerBundleIdentifier: string;
   localizedDescription?: string;
 }
@@ -43,6 +46,12 @@ declare namespace RNSimpleOpenvpn {
     VPN_STATE_CONNECTED,
     VPN_STATE_DISCONNECTING,
     VPN_OTHER_STATE,
+  }
+  enum CompatMode {
+    MODERN_DEFAULTS,
+    OVPN_TWO_FIVE_PEER,
+    OVPN_TWO_FOUR_PEER,
+    OVPN_TWO_THREE_PEER,
   }
 }
 
