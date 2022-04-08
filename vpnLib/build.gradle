@@ -18,6 +18,7 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 def DEFAULT_COMPILE_SDK_VERSION = 30
 def DEFAULT_BUILD_TOOLS_VERSION = '30.0.2'
@@ -34,7 +35,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32"
     }
 }
 
@@ -46,24 +47,38 @@ android {
         targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
         versionCode 1
         versionName "1.0"
+        buildConfigField("boolean", "openvpn3", "true")
     }
     lintOptions {
         abortOnError false
     }
-}
-
-repositories {
-    maven {
-        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-        url "$rootDir/../node_modules/react-native/android"
+    flavorDimensions "implementation"
+    productFlavors {
+        ui {
+            dimension "implementation"
+        }
     }
-    google()
-    mavenLocal()
-    mavenCentral()
+    sourceSets {
+        main {
+            java {
+                srcDirs = [
+                    'src/main/java',
+                    'src/ui/java',
+                ]
+            }
+            res {
+                srcDirs = [
+                    'src/main/res',
+                    'src/ui/res'
+                ]
+            }
+        }
+    }
 }
 
 dependencies {
-    implementation "com.facebook.react:react-native:${safeExtGet('reactNative', '+')}"
     implementation fileTree(dir: "libs", includes: ['*.jar'])
-    implementation project(path: ':vpnLib')
+    implementation "androidx.annotation:annotation:1.3.0"
+    implementation "androidx.core:core:1.6.0"
+    implementation "androidx.appcompat:appcompat:1.3.1"
 }
