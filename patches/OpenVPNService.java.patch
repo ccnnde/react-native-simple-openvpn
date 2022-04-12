@@ -1,0 +1,91 @@
+diff --git a/vpnLib/src/main/java/de/blinkt/openvpn/core/OpenVPNService.java b/vpnLib/src/main/java/de/blinkt/openvpn/core/OpenVPNService.java
+index f7b6515..84fedc6 100644
+--- a/vpnLib/src/main/java/de/blinkt/openvpn/core/OpenVPNService.java
++++ b/vpnLib/src/main/java/de/blinkt/openvpn/core/OpenVPNService.java
+@@ -9,6 +9,7 @@ import android.Manifest.permission;
+ import android.annotation.TargetApi;
+ import android.app.Activity;
+ import android.app.Notification;
++import android.app.NotificationChannel;
+ import android.app.NotificationManager;
+ import android.app.PendingIntent;
+ import android.app.UiModeManager;
+@@ -20,6 +21,7 @@ import android.content.pm.PackageManager;
+ import android.content.pm.ShortcutManager;
+ import android.content.res.Configuration;
+ import android.content.res.Resources;
++import android.graphics.Color;
+ import android.net.ConnectivityManager;
+ import android.net.ProxyInfo;
+ import android.net.Uri;
+@@ -247,8 +249,28 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
+         }
+     }
+ 
++    @RequiresApi(Build.VERSION_CODES.O)
++    private String createNotificationChannel(String channelId) {
++        if (lastChannel == null || lastChannel.isEmpty()){
++            NotificationChannel chan = new NotificationChannel(channelId,
++                    getString(R.string.channel_name_background), NotificationManager.IMPORTANCE_NONE);
++            chan.setLightColor(Color.BLUE);
++            chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
++            NotificationManager service = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
++            service.createNotificationChannel(chan);
++
++            lastChannel = channelId;
++        }
++
++        return lastChannel;
++    }
++
+     private void showNotification(final String msg, String tickerText, @NonNull String channel,
+                                   long when, ConnectionStatus status, Intent intent) {
++        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
++            channel = createNotificationChannel(channel);
++        }
++
+         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+         int icon = getIconByConnectionStatus(status);
+ 
+@@ -263,7 +285,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
+             priority = PRIORITY_DEFAULT;
+ 
+         if (mProfile != null)
+-            nbuilder.setContentTitle(getString(R.string.notifcation_title, mProfile.mName));
++            nbuilder.setContentTitle(mProfile.mName);
+         else
+             nbuilder.setContentTitle(getString(R.string.notifcation_title_notconnect));
+ 
+@@ -391,9 +413,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
+ 
+     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+     private void addVpnActionsToNotification(Notification.Builder nbuilder) {
+-        Intent disconnectVPN = new Intent(this, DisconnectVPN.class);
++        Intent disconnectVPN = new Intent(this, OpenVPNService.class);
+         disconnectVPN.setAction(DISCONNECT_VPN);
+-        PendingIntent disconnectPendingIntent = PendingIntent.getActivity(this, 0, disconnectVPN, PendingIntent.FLAG_IMMUTABLE);
++        PendingIntent disconnectPendingIntent = PendingIntent.getService(this, 0, disconnectVPN, PendingIntent.FLAG_IMMUTABLE);
+ 
+         nbuilder.addAction(R.drawable.ic_menu_close_clear_cancel,
+                 getString(R.string.cancel_connection), disconnectPendingIntent);
+@@ -428,7 +450,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
+ 
+ 
+         Intent intent = new Intent();
+-        intent.setComponent(new ComponentName(this, getPackageName() + ".activities.MainActivity"));
++        intent.setComponent(new ComponentName(this, getPackageName() + ".MainActivity"));
+ 
+         intent.putExtra("PAGE", "graph");
+         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+@@ -498,6 +520,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
+ 
+         guiHandler = new Handler(getMainLooper());
+ 
++        if (intent != null && DISCONNECT_VPN.equals(intent.getAction())) {
++            if (mManagement != null)
++                mManagement.stopVPN(false);
++            return START_NOT_STICKY;
++        }
+ 
+         if (intent != null && PAUSE_VPN.equals(intent.getAction())) {
+             if (mDeviceStateReceiver != null)

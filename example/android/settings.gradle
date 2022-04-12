@@ -1,5 +1,5 @@
 rootProject.name = 'example'
-include ':react-native-simple-openvpn'
-project(':react-native-simple-openvpn').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-simple-openvpn/android')
+include ':vpnLib'
+project(':vpnLib').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-simple-openvpn/vpnLib')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'

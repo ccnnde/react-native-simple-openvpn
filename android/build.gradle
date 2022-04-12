@@ -19,10 +19,10 @@
 
 apply plugin: 'com.android.library'
 
-def DEFAULT_COMPILE_SDK_VERSION = 26
-def DEFAULT_BUILD_TOOLS_VERSION = '26.0.2'
+def DEFAULT_COMPILE_SDK_VERSION = 30
+def DEFAULT_BUILD_TOOLS_VERSION = '30.0.2'
 def DEFAULT_MIN_SDK_VERSION = 16
-def DEFAULT_TARGET_SDK_VERSION = 26
+def DEFAULT_TARGET_SDK_VERSION = 30
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -30,14 +30,11 @@ def safeExtGet(prop, fallback) {
 
 buildscript {
     repositories {
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
-        jcenter()
+        google()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:4.2.1'
     }
 }
 
@@ -56,15 +53,17 @@ android {
 }
 
 repositories {
-    mavenLocal()
-    jcenter()
     maven {
         // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
         url "$rootDir/../node_modules/react-native/android"
     }
+    google()
+    mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
-    compile "com.facebook.react:react-native:${safeExtGet('reactNative', '+')}"
-    compile fileTree( dir: "libs", includes: ['*.jar'] )
+    implementation "com.facebook.react:react-native:${safeExtGet('reactNative', '+')}"
+    implementation fileTree(dir: "libs", includes: ['*.jar'])
+    implementation project(path: ':vpnLib')
 }

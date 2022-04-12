@@ -37,6 +37,8 @@ const App = () => {
         remoteAddress: '',
         ovpnFileName: 'Japan', // Japan or Russian (android assets folder)
         assetsPath: '',
+        notificationTitle: 'RNSimpleOpenVPN',
+        compatMode: RNSimpleOpenvpn.CompatMode.OVPN_TWO_THREE_PEER,
         providerBundleIdentifier: 'com.your.network.extension.bundle.id',
         localizedDescription: 'TestRNSimpleOvpn',
       });
