@@ -18,7 +18,8 @@
     "build-vpn-lib": "yarn build-ics-ovpn; yarn gen-vpn-lib; yarn patch-vpn-lib",
     "build-ics-ovpn": "sh scripts/build-ics-ovpn.sh",
     "gen-vpn-lib": "sh scripts/gen-vpn-lib.sh",
-    "patch-vpn-lib": "sh scripts/patch-vpn-lib.sh"
+    "patch-vpn-lib": "sh scripts/patch-vpn-lib.sh",
+    "zip-vpn-jni": "node vpnJni/zip-vpn-jni.js"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "devDependencies": {
+    "archiver": "^5.3.0",
     "clang-format": "^1.4.0",
     "prettier": "^2.3.2"
   }
