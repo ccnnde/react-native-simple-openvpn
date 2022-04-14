@@ -1,7 +1,8 @@
 # react-native-simple-openvpn
 
 [![npm latest][version-img]][pkg-url]
-[![download][download-img]][pkg-url]
+[![download month][dl-month-img]][pkg-url]
+[![download total][dl-total-img]][pkg-url]
 ![platforms][platform-img]
 [![GNU General Public License][license-img]](LICENSE)
 
@@ -9,11 +10,14 @@ English | [简体中文](./README.zh-CN.md)
 
 A simple react native module to interact with OpenVPN
 
+If this project has helped you out, please support us with a star 🌟
+
 ## Versions
 
 | RNSimpleOpenvpn | React Native |
 | --------------- | ------------ |
 | 1.0.0 ~ 1.2.0   | 0.56 ~ 0.66  |
+| 2.0.0           | 0.63 ~ 0.68  |
 
 ## Preview
 
@@ -40,6 +44,40 @@ From react-native 0.60 autolinking will take care of the link step
 
 ```sh
 react-native link react-native-simple-openvpn
+```
+
+### Android
+
+Add the following to `android/settings.gradle` :
+
+```diff
+rootProject.name = 'example'
++ include ':vpnLib'
++ project(':vpnLib').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-simple-openvpn/vpnLib')
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
+```
+
+#### Import jniLibs
+
+Due to file size limitations, jniLibs are too big to be published on npm. Use the assets on [GitHub Releases](https://github.com/ccnnde/react-native-simple-openvpn/releases) instead
+
+Download and unzip the resources you need for the corresponding architecture, and put them in `android/app/src/main/jniLibs` (create a new `jniLibs` folder if you don't have one)
+
+```sh
+project
+├── android
+│   ├── app
+│   │   └── src
+│   │       └── main
+│   │           └── jniLibs
+│   │               ├── arm64-v8a
+│   │               ├── armeabi-v7a
+│   │               ├── x86
+│   │               └── x86_64
+│   └── ...
+├── ios
+└── ...
 ```
 
 ### iOS
@@ -164,9 +202,10 @@ export default App;
 
 ## Properties
 
-| Name     | Value                                                                                                                                                     | Description        |
-| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| VpnState | VPN_STATE_DISCONNECTED = 0 <br/> VPN_STATE_CONNECTING = 1 <br/> VPN_STATE_CONNECTED = 2 <br/> VPN_STATE_DISCONNECTING = 3 <br/> VPN_OTHER_STATE = 4 <br/> | VPN Current Status |
+| Name       | Value                                                                                                                                                     | Description                                  |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| VpnState   | VPN_STATE_DISCONNECTED = 0 <br/> VPN_STATE_CONNECTING = 1 <br/> VPN_STATE_CONNECTED = 2 <br/> VPN_STATE_DISCONNECTING = 3 <br/> VPN_OTHER_STATE = 4 <br/> | VPN Current Status                           |
+| CompatMode | MODERN_DEFAULTS = 0 <br/> OVPN_TWO_FIVE_PEER = 1 <br/> OVPN_TWO_FOUR_PEER = 2 <br/> OVPN_TWO_THREE_PEER = 3 <br/>                                         | OpenVPN Compatibility Mode(**Android only**) |
 
 ## Types
 
@@ -178,6 +217,9 @@ interface VpnOptions {
   ovpnString?: string;
   ovpnFileName?: string;
   assetsPath?: string;
+  notificationTitle?: string;
+  compatMode?: RNSimpleOpenvpn.CompatMode;
+  useLegacyProvider?: boolean;
   providerBundleIdentifier: string;
   localizedDescription?: string;
 }
@@ -203,6 +245,25 @@ The name of the OpenVPN configuration file, without extensions, using the defaul
 
 - `assetsPath` is `''` when not passed in, the file path is `assets/xxx.ovpn`
 - When passing in a path, such as `'ovpn/'`, the file path is `assets/ovpn/xxx.ovpn`
+
+#### notificationTitle
+
+**Android only**，the title of the notification, using the default value `OpenVPN` if not passed in
+
+#### compatMode
+
+**Android only**，[OpenVPN compatibility mode](#properties), using the default value `MODERN_DEFAULTS` if not passed in
+
+| Mode                | Description                   |
+| ------------------- | ----------------------------- |
+| MODERN_DEFAULTS     | Modern defaults               |
+| OVPN_TWO_FIVE_PEER  | OpenVPN 2.5.x peers           |
+| OVPN_TWO_FOUR_PEER  | OpenVPN 2.4.x peers           |
+| OVPN_TWO_THREE_PEER | OpenVPN 2.3.x and older peers |
+
+#### useLegacyProvider
+
+**Android only**，load OpenSSL legacy provider or not, using the default value `false` if not passed in
 
 #### providerBundleIdentifier
 
@@ -255,13 +316,13 @@ However, if you need to dynamically change the `remote` address in the configura
 
 The following items were used in this project
 
-- Android - [ics-openvpn](https://github.com/schwabe/ics-openvpn), for personal project reasons, the Android side is currently using an older version of its core library
+- Android - [ics-openvpn](https://github.com/schwabe/ics-openvpn) v0.7.33
 - iOS - [OpenVPNAdapter](https://github.com/ss-abramchuk/OpenVPNAdapter) v0.8.0
 
 ## Todo
 
 - [x] Resolve RN 0.65 warning
-- [ ] Upgrade to the latest Android OpenVPN library
+- [x] Upgrade to the latest Android OpenVPN library
 
 ## License
 
@@ -271,6 +332,7 @@ The following items were used in this project
 
 [pkg-url]: https://www.npmjs.com/package/react-native-simple-openvpn
 [version-img]: https://img.shields.io/npm/v/react-native-simple-openvpn?color=deepgreen&style=flat-square
-[download-img]: https://img.shields.io/npm/dm/react-native-simple-openvpn?style=flat-square
+[dl-month-img]: https://img.shields.io/npm/dm/react-native-simple-openvpn?style=flat-square
+[dl-total-img]: https://img.shields.io/npm/dt/react-native-simple-openvpn?label=total&style=flat-square
 [platform-img]: https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey?style=flat-square
 [license-img]: https://img.shields.io/badge/license-GPL%20v2-orange?style=flat-square

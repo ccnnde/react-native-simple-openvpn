@@ -1,13 +1,14 @@
 {
   "name": "react-native-simple-openvpn",
   "title": "React Native Simple Openvpn",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "React Native Open VPN Module",
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
     "README.md",
     "android",
+    "vpnLib",
     "index.js",
     "index.d.ts",
     "ios",
@@ -38,6 +39,9 @@
   "license": "GPL-2.0-or-later",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react-native": ">=0.63"
+  },
   "devDependencies": {
     "archiver": "^5.3.0",
     "clang-format": "^1.4.0",

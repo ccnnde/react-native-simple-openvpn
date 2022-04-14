@@ -1,19 +1,23 @@
 # react-native-simple-openvpn
 
 [![npm latest][version-img]][pkg-url]
-[![download][download-img]][pkg-url]
+[![download month][dl-month-img]][pkg-url]
+[![download total][dl-total-img]][pkg-url]
 ![platforms][platform-img]
 [![GNU General Public License][license-img]](LICENSE)
 
 简体中文 | [English](./README.md)
 
-A simple react native module to interact with OpenVPN
+react-native-simple-openvpn 提供了与 OpenVPN 交互的接口
+
+如果本项目对你有所帮助，请 star 🌟 鼓励，谢谢 🙏
 
 ## 版本
 
 | RNSimpleOpenvpn | React Native |
 | --------------- | ------------ |
 | 1.0.0 ~ 1.2.0   | 0.56 ~ 0.66  |
+| 2.0.0           | 0.63 ~ 0.68  |
 
 ## 预览
 
@@ -40,6 +44,40 @@ yarn add react-native-simple-openvpn
 
 ```sh
 react-native link react-native-simple-openvpn
+```
+
+### Android
+
+在项目的 `android/settings.gradle` 中添加以下代码：
+
+```diff
+rootProject.name = 'example'
++ include ':vpnLib'
++ project(':vpnLib').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-simple-openvpn/vpnLib')
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
+```
+
+#### 导入 jniLibs
+
+由于存在文件大小的限制，jniLibs 无法随模块一起发布到 npm 上。故使用 [GitHub Releases](https://github.com/ccnnde/react-native-simple-openvpn/releases) 中的 assets 来代替
+
+下载并解压你需要的相应架构的资源，然后将其放入 `android/app/src/main/jniLibs` 中（如果 `jniLibs` 文件夹不存在则手动新建一个）
+
+```sh
+project
+├── android
+│   ├── app
+│   │   └── src
+│   │       └── main
+│   │           └── jniLibs
+│   │               ├── arm64-v8a
+│   │               ├── armeabi-v7a
+│   │               ├── x86
+│   │               └── x86_64
+│   └── ...
+├── ios
+└── ...
 ```
 
 ### iOS
@@ -164,9 +202,10 @@ export default App;
 
 ## 属性
 
-| 名称     | 值                                                                                                                                                        | 描述         |
-| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| VpnState | VPN_STATE_DISCONNECTED = 0 <br/> VPN_STATE_CONNECTING = 1 <br/> VPN_STATE_CONNECTED = 2 <br/> VPN_STATE_DISCONNECTING = 3 <br/> VPN_OTHER_STATE = 4 <br/> | VPN 当前状态 |
+| 名称       | 值                                                                                                                                                        | 描述                               |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| VpnState   | VPN_STATE_DISCONNECTED = 0 <br/> VPN_STATE_CONNECTING = 1 <br/> VPN_STATE_CONNECTED = 2 <br/> VPN_STATE_DISCONNECTING = 3 <br/> VPN_OTHER_STATE = 4 <br/> | VPN 当前状态                       |
+| CompatMode | MODERN_DEFAULTS = 0 <br/> OVPN_TWO_FIVE_PEER = 1 <br/> OVPN_TWO_FOUR_PEER = 2 <br/> OVPN_TWO_THREE_PEER = 3 <br>                                          | OpenVPN 兼容模式(**Android only**) |
 
 ## 类型
 
@@ -178,6 +217,9 @@ interface VpnOptions {
   ovpnString?: string;
   ovpnFileName?: string;
   assetsPath?: string;
+  notificationTitle?: string;
+  compatMode?: RNSimpleOpenvpn.CompatMode;
+  useLegacyProvider?: boolean;
   providerBundleIdentifier: string;
   localizedDescription?: string;
 }
@@ -203,6 +245,25 @@ OpenVPN 配置文件的名称，不含扩展名，未传入时使用默认名称
 
 - 未传入时 `assetsPath` 为 `''`，文件路径为 `assets/xxx.ovpn`
 - 传入路径时，比如 `'ovpn/'`，文件路径为 `assets/ovpn/xxx.ovpn`
+
+#### notificationTitle
+
+**Android 专用**，通知的标题，未传入时使用默认值 `OpenVPN`
+
+#### compatMode
+
+**Android 专用**，[OpenVPN 兼容模式](#properties)，未传入时使用默认值 `MODERN_DEFAULTS`
+
+| 模式                | 描述                          |
+| ------------------- | ----------------------------- |
+| MODERN_DEFAULTS     | Modern defaults               |
+| OVPN_TWO_FIVE_PEER  | OpenVPN 2.5.x peers           |
+| OVPN_TWO_FOUR_PEER  | OpenVPN 2.4.x peers           |
+| OVPN_TWO_THREE_PEER | OpenVPN 2.3.x and older peers |
+
+#### useLegacyProvider
+
+**Android 专用**，是否加载 OpenSSL legacy provider，未传入时使用默认值 `false`
 
 #### providerBundleIdentifier
 
@@ -255,7 +316,7 @@ remote <IP address> <port>
 
 本项目使用到了以下项目
 
-- Android - [ics-openvpn](https://github.com/schwabe/ics-openvpn)，由于个人项目的原因，Android 端目前使用的是其核心库的较旧版本
+- Android - [ics-openvpn](https://github.com/schwabe/ics-openvpn) v0.7.33
 - iOS - [OpenVPNAdapter](https://github.com/ss-abramchuk/OpenVPNAdapter) v0.8.0
 
 ## License
@@ -266,6 +327,7 @@ remote <IP address> <port>
 
 [pkg-url]: https://www.npmjs.com/package/react-native-simple-openvpn
 [version-img]: https://img.shields.io/npm/v/react-native-simple-openvpn?color=deepgreen&style=flat-square
-[download-img]: https://img.shields.io/npm/dm/react-native-simple-openvpn?style=flat-square
+[dl-month-img]: https://img.shields.io/npm/dm/react-native-simple-openvpn?style=flat-square
+[dl-total-img]: https://img.shields.io/npm/dt/react-native-simple-openvpn?label=total&style=flat-square
 [platform-img]: https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey?style=flat-square
 [license-img]: https://img.shields.io/badge/license-GPL%20v2-orange?style=flat-square
