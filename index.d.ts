@@ -25,6 +25,8 @@ interface VpnOptions {
   notificationTitle?: string;
   compatMode?: RNSimpleOpenvpn.CompatMode;
   useLegacyProvider?: boolean;
+  useCustomConfig?: boolean;
+  customConfigOptions?: string;
   providerBundleIdentifier: string;
   localizedDescription?: string;
 }

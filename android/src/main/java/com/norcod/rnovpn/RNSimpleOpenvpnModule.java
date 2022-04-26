@@ -242,6 +242,8 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
       int compatMode = ovpnOptions.get("compatMode") != null ? ((Double)ovpnOptions.get("compatMode")).intValue()
                                                              : CompatMode.MODERN_DEFAULTS.ordinal();
       boolean useLegacyProvider = (boolean)ovpnOptions.getOrDefault("useLegacyProvider", false);
+      boolean useCustomConfig = (boolean)ovpnOptions.getOrDefault("useCustomConfig", false);
+      String customConfigOptions = ovpnOptions.getOrDefault("customConfigOptions", "").toString();
       // String username = ovpnOptions.getOrDefault("username", "").toString();
       // String password = ovpnOptions.getOrDefault("password", "").toString();
 
@@ -250,6 +252,8 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
       vpnProfile.mName = notificationTitle;
       vpnProfile.mCompatMode = Utils.mapCompatMode(compatMode);
       vpnProfile.mUseLegacyProvider = useLegacyProvider;
+      vpnProfile.mUseCustomConfig = useCustomConfig;
+      vpnProfile.mCustomConfigOptions = customConfigOptions;
       // vpnProfile.mUsername = username;
       // vpnProfile.mPassword = password;
 
