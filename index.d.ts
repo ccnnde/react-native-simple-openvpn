@@ -21,6 +21,8 @@ interface VpnOptions {
   remoteAddress?: string;
   ovpnString?: string;
   ovpnFileName?: string;
+  username?: string;
+  password?: string;
   assetsPath?: string;
   notificationTitle?: string;
   compatMode?: RNSimpleOpenvpn.CompatMode;

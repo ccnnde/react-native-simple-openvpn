@@ -137,10 +137,12 @@ RCT_EXPORT_METHOD(disconnect : (RCTPromiseResolveBlock)resolve rejecter : (RCTPr
         reject(@"E_LOAD_PREFERENCE_ERROR", @"Provider Manager load preferences failed", error);
       } else {
         NSError *error = nil;
+        NSString *const username = self.ovpnOptions[@"username"] ? self.ovpnOptions[@"username"] : @"";
+        NSString *const password = self.ovpnOptions[@"password"] ? self.ovpnOptions[@"password"] : @"";
         NSString *const remoteAddress = self.ovpnOptions[@"remoteAddress"] ? self.ovpnOptions[@"remoteAddress"] : @"";
 
         [self.providerManager.connection
-            startVPNTunnelWithOptions:@{@"username" : @"", @"password" : @"", @"remote" : remoteAddress}
+            startVPNTunnelWithOptions:@{@"username" : username, @"password" : password, @"remote" : remoteAddress}
                        andReturnError:&error];
 
         if (error) {

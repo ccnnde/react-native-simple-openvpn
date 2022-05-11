@@ -238,24 +238,24 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
     ConfigParser cp = new ConfigParser();
 
     try {
+      String username = ovpnOptions.getOrDefault("username", "").toString();
+      String password = ovpnOptions.getOrDefault("password", "").toString();
       String notificationTitle = ovpnOptions.getOrDefault("notificationTitle", "OpenVPN").toString();
       int compatMode = ovpnOptions.get("compatMode") != null ? ((Double)ovpnOptions.get("compatMode")).intValue()
                                                              : CompatMode.MODERN_DEFAULTS.ordinal();
       boolean useLegacyProvider = (boolean)ovpnOptions.getOrDefault("useLegacyProvider", false);
       boolean useCustomConfig = (boolean)ovpnOptions.getOrDefault("useCustomConfig", false);
       String customConfigOptions = ovpnOptions.getOrDefault("customConfigOptions", "").toString();
-      // String username = ovpnOptions.getOrDefault("username", "").toString();
-      // String password = ovpnOptions.getOrDefault("password", "").toString();
 
       cp.parseConfig(new StringReader(config));
       vpnProfile = cp.convertProfile();
+      vpnProfile.mUsername = username;
+      vpnProfile.mPassword = password;
       vpnProfile.mName = notificationTitle;
       vpnProfile.mCompatMode = Utils.mapCompatMode(compatMode);
       vpnProfile.mUseLegacyProvider = useLegacyProvider;
       vpnProfile.mUseCustomConfig = useCustomConfig;
       vpnProfile.mCustomConfigOptions = customConfigOptions;
-      // vpnProfile.mUsername = username;
-      // vpnProfile.mPassword = password;
 
       if (vpnProfile.checkProfile(reactContext) != R.string.no_error_found) {
         throw new RemoteException(reactContext.getString(vpnProfile.checkProfile(reactContext)));
