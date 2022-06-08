@@ -194,6 +194,11 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
     }
   }
 
+  @ReactMethod
+  public void getCurrentState(Promise promise) {
+    promise.resolve(getVpnState(VpnStatus.getStatus()));
+  }
+
   private void prepareVpn(final Promise promise) {
     Activity currentActivity = getCurrentActivity();
 

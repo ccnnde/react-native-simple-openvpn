@@ -177,6 +177,11 @@ RCT_EXPORT_METHOD(stopObserveState : (RCTPromiseResolveBlock)resolve rejecter : 
   resolve(nil);
 }
 
+RCT_EXPORT_METHOD(getCurrentState : (RCTPromiseResolveBlock)resolve rejecter : (RCTPromiseRejectBlock)reject) {
+  NSDictionary *vpnState = [self getVpnState:self.providerManager.connection.status];
+  resolve(vpnState[@"state"]);
+}
+
 - (NSDictionary *)getVpnState:(NEVPNStatus)status {
   VpnState state;
   NSString *message;

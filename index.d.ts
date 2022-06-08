@@ -42,6 +42,7 @@ interface VpnEventParams {
 declare namespace RNSimpleOpenvpn {
   function connect(options: VpnOptions): Promise<void>;
   function disconnect(): Promise<void>;
+  function getCurrentState(): Promise<VpnState>;
   function observeState(): Promise<void>;
   function stopObserveState(): Promise<void>;
   enum VpnState {

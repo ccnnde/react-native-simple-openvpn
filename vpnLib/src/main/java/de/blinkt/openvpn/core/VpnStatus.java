@@ -73,6 +73,10 @@ public class VpnStatus {
         return mLastLevel != ConnectionStatus.LEVEL_AUTH_FAILED && !(mLastLevel == ConnectionStatus.LEVEL_NOTCONNECTED);
     }
 
+    public static ConnectionStatus getStatus() {
+        return mLastLevel;
+    }
+
     public static String getLastCleanLogMessage(Context c) {
         String message = mLaststatemsg;
         switch (mLastLevel) {
