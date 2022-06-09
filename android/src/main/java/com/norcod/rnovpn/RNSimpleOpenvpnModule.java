@@ -251,6 +251,9 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
       boolean useLegacyProvider = (boolean)ovpnOptions.getOrDefault("useLegacyProvider", false);
       boolean useCustomConfig = (boolean)ovpnOptions.getOrDefault("useCustomConfig", false);
       String customConfigOptions = ovpnOptions.getOrDefault("customConfigOptions", "").toString();
+      ArrayList<String> allowedAppsVpn =
+          (ArrayList<String>)ovpnOptions.getOrDefault("allowedAppsVpn", new ArrayList<>());
+      boolean allowedAppsVpnAreDisallowed = (boolean)ovpnOptions.getOrDefault("allowedAppsVpnAreDisallowed", true);
 
       cp.parseConfig(new StringReader(config));
       vpnProfile = cp.convertProfile();
@@ -261,6 +264,11 @@ public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements
       vpnProfile.mUseLegacyProvider = useLegacyProvider;
       vpnProfile.mUseCustomConfig = useCustomConfig;
       vpnProfile.mCustomConfigOptions = customConfigOptions;
+      vpnProfile.mAllowedAppsVpnAreDisallowed = allowedAppsVpnAreDisallowed;
+
+      for (String pkgNames : allowedAppsVpn) {
+        vpnProfile.mAllowedAppsVpn.add(pkgNames);
+      }
 
       if (vpnProfile.checkProfile(reactContext) != R.string.no_error_found) {
         throw new RemoteException(reactContext.getString(vpnProfile.checkProfile(reactContext)));

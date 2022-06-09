@@ -29,6 +29,8 @@ interface VpnOptions {
   useLegacyProvider?: boolean;
   useCustomConfig?: boolean;
   customConfigOptions?: string;
+  allowedAppsVpn?: Array<string>;
+  allowedAppsVpnAreDisallowed?: boolean;
   providerBundleIdentifier: string;
   localizedDescription?: string;
 }
