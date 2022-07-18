@@ -65,6 +65,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import java.util.ArrayList;
+
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class RNSimpleOpenvpnModule extends ReactContextBaseJavaModule implements VpnStatus.StateListener {
 
