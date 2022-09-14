@@ -1,4 +1,4 @@
-# react-native-simple-openvpn
+# react-native-simple-openvpn [![github stars][github-star-img]][stargazers-url]
 
 [![npm latest][version-img]][pkg-url]
 [![download month][dl-month-img]][pkg-url]
@@ -331,6 +331,8 @@ The following items were used in this project
 <!-- badge url -->
 
 [pkg-url]: https://www.npmjs.com/package/react-native-simple-openvpn
+[stargazers-url]: https://github.com/ccnnde/react-native-simple-openvpn/stargazers
+[github-star-img]: https://img.shields.io/github/stars/ccnnde/react-native-simple-openvpn?label=Star%20Project&style=social
 [version-img]: https://img.shields.io/npm/v/react-native-simple-openvpn?color=deepgreen&style=flat-square
 [dl-month-img]: https://img.shields.io/npm/dm/react-native-simple-openvpn?style=flat-square
 [dl-total-img]: https://img.shields.io/npm/dt/react-native-simple-openvpn?label=total&style=flat-square
