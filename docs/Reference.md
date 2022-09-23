@@ -10,6 +10,7 @@ This document lays out the current public properties and methods for the React N
 | ---------------------- | --- | ------- | -------------------------------------------------------- | ------- | ------------------------------------------- |
 | connect                | ✅  | ✅      | options: [VpnOptions](#vpnoptions)                       | promise | Connecting to OpenVPN                       |
 | disconnect             | ✅  | ✅      | none                                                     | promise | Close the OpenVPN connection                |
+| getCurrentState        | ✅  | ✅      | none                                                     | promise | Get current VPN status                      |
 | observeState           | ✅  | ❌      | none                                                     | promise | Listening for VPN status                    |
 | stopObserveState       | ✅  | ❌      | none                                                     | promise | Stop listening to VPN status                |
 | addVpnStateListener    | ✅  | ✅      | callback: (e: [VpnEventParams](#vpneventparams)) => void | void    | Add VPN status change event listener        |
@@ -31,10 +32,16 @@ interface VpnOptions {
   remoteAddress?: string;
   ovpnString?: string;
   ovpnFileName?: string;
+  username?: string;
+  password?: string;
   assetsPath?: string;
   notificationTitle?: string;
   compatMode?: RNSimpleOpenvpn.CompatMode;
   useLegacyProvider?: boolean;
+  useCustomConfig?: boolean;
+  customConfigOptions?: string;
+  allowedAppsVpn?: Array<string>;
+  allowedAppsVpnAreDisallowed?: boolean;
   providerBundleIdentifier: string;
   localizedDescription?: string;
 }
@@ -53,6 +60,14 @@ String format reference [example.ovpn](../example/android/app/src/main/assets/Ja
 #### ovpnFileName
 
 The name of the OpenVPN configuration file, without extensions, using the default name `client` if not passed in
+
+#### username
+
+The username for auth, using the default value `''` if not passed in
+
+#### password
+
+The password for auth, using the default value `''` if not passed in
 
 #### assetsPath
 
@@ -79,6 +94,31 @@ The name of the OpenVPN configuration file, without extensions, using the defaul
 #### useLegacyProvider
 
 **Android only**，load OpenSSL legacy provider or not, using the default value `false` if not passed in
+
+#### useCustomConfig
+
+**Android only**, use custom config or not, using the default value `false` if not passed in
+
+#### customConfigOptions
+
+**Android only**, add your own configuration string like below, using the default value `''` if not passed in
+
+```text
+http-proxy ...
+http-proxy-option ...
+```
+
+#### allowedAppsVpn
+
+**Android only**, list of application package names for VPN connection, the default value is an empty array
+
+```js
+['com.app1', 'com.app2'];
+```
+
+#### allowedAppsVpnAreDisallowed
+
+**Android only**, the packages that we specify **allowedAppsVpn** use our VPN connection or not, and the rest is the opposite, using the default value `true` if not passed in
 
 #### providerBundleIdentifier
 

@@ -10,6 +10,7 @@
 | ---------------------- | --- | ------- | -------------------------------------------------------- | ------- | ------------------------- |
 | connect                | ✅  | ✅      | options: [VpnOptions](#vpnoptions)                       | promise | 连接 OpenVPN              |
 | disconnect             | ✅  | ✅      | 无                                                       | promise | 关闭 OpenVPN 连接         |
+| getCurrentState        | ✅  | ✅      | none                                                     | promise | 获取 VPN 当前状态         |
 | observeState           | ✅  | ❌      | 无                                                       | promise | 监听 VPN 状态             |
 | stopObserveState       | ✅  | ❌      | 无                                                       | promise | 停止监听 VPN 状态         |
 | addVpnStateListener    | ✅  | ✅      | callback: (e: [VpnEventParams](#vpneventparams)) => void | void    | 添加 VPN 状态变更事件监听 |
@@ -31,10 +32,16 @@ interface VpnOptions {
   remoteAddress?: string;
   ovpnString?: string;
   ovpnFileName?: string;
+  username?: string;
+  password?: string;
   assetsPath?: string;
   notificationTitle?: string;
   compatMode?: RNSimpleOpenvpn.CompatMode;
   useLegacyProvider?: boolean;
+  useCustomConfig?: boolean;
+  customConfigOptions?: string;
+  allowedAppsVpn?: Array<string>;
+  allowedAppsVpnAreDisallowed?: boolean;
   providerBundleIdentifier: string;
   localizedDescription?: string;
 }
@@ -53,6 +60,14 @@ OpenVPN 配置文件内容的字符串形式，未传入时或传递空字符串
 #### ovpnFileName
 
 OpenVPN 配置文件的名称，不含扩展名，未传入时使用默认名称 `client`
+
+#### username
+
+鉴权用户名, 未传入时使用默认名称 `''`
+
+#### password
+
+鉴权密码, 未传入时使用默认名称 `''`
 
 #### assetsPath
 
@@ -79,6 +94,31 @@ OpenVPN 配置文件的名称，不含扩展名，未传入时使用默认名称
 #### useLegacyProvider
 
 **Android 专用**，是否加载 OpenSSL legacy provider，未传入时使用默认值 `false`
+
+#### useCustomConfig
+
+**Android 专用**， 是否使用自定义配置，未传入时使用默认值 `false`
+
+#### customConfigOptions
+
+**Android 专用**，添加类似下方的配置字符串，未传入时使用默认值 `''`
+
+```text
+http-proxy ...
+http-proxy-option ...
+```
+
+#### allowedAppsVpn
+
+**Android 专用**, 进行 VPN 连接的应用包名列表, 默认值为空数组
+
+```js
+['com.app1', 'com.app2'];
+```
+
+#### allowedAppsVpnAreDisallowed
+
+**Android 专用**, 控制 **allowedAppsVpn** 中所列的应用是否使用 VPN 连接, 而剩下的应用则相反, 未传入时使用默认值 `true`
 
 #### providerBundleIdentifier
 
