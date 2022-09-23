@@ -10,7 +10,7 @@
 | ---------------------- | --- | ------- | -------------------------------------------------------- | ------- | ------------------------- |
 | connect                | ✅  | ✅      | options: [VpnOptions](#vpnoptions)                       | promise | 连接 OpenVPN              |
 | disconnect             | ✅  | ✅      | 无                                                       | promise | 关闭 OpenVPN 连接         |
-| getCurrentState        | ✅  | ✅      | none                                                     | promise | 获取 VPN 当前状态         |
+| getCurrentState        | ✅  | ✅      | 无                                                       | promise | 获取 VPN 当前状态         |
 | observeState           | ✅  | ❌      | 无                                                       | promise | 监听 VPN 状态             |
 | stopObserveState       | ✅  | ❌      | 无                                                       | promise | 停止监听 VPN 状态         |
 | addVpnStateListener    | ✅  | ✅      | callback: (e: [VpnEventParams](#vpneventparams)) => void | void    | 添加 VPN 状态变更事件监听 |
@@ -63,11 +63,11 @@ OpenVPN 配置文件的名称，不含扩展名，未传入时使用默认名称
 
 #### username
 
-鉴权用户名, 未传入时使用默认名称 `''`
+鉴权用户名, 未传入时使用默认值 `''`
 
 #### password
 
-鉴权密码, 未传入时使用默认名称 `''`
+鉴权密码, 未传入时使用默认值 `''`
 
 #### assetsPath
 
