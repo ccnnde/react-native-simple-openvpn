@@ -17,22 +17,23 @@
  * along with react-native-simple-openvpn.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { NativeModules, NativeEventEmitter } from 'react-native';
+import {NativeModules, NativeEventEmitter} from 'react-native';
 
-const { RNSimpleOpenvpn } = NativeModules;
+const {RNSimpleOpenvpn} = NativeModules;
 const localEventEmitter = new NativeEventEmitter(RNSimpleOpenvpn);
 let stateListener = null;
 
 export const addVpnStateListener = (callback) => {
-  stateListener = localEventEmitter.addListener('stateChanged', (e) => callback(e));
+    stateListener = localEventEmitter.addListener('stateChanged', (e) => callback(e));
+    return stateListener;
 };
 
 export const removeVpnStateListener = () => {
-  if (!stateListener) {
-    return;
-  }
-  stateListener.remove();
-  stateListener = null;
+    if (!stateListener) {
+        return;
+    }
+    stateListener.remove();
+    stateListener = null;
 };
-
+export const listener = localEventEmitter;
 export default RNSimpleOpenvpn;
