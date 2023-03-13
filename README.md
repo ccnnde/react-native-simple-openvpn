@@ -14,10 +14,10 @@ If this project has helped you out, please support us with a star 🌟
 
 ## Versions
 
-| RNSimpleOpenvpn | React Native |
-| --------------- | ------------ |
-| 1.0.0 ~ 1.2.0   | 0.56 ~ 0.66  |
-| 2.0.0           | 0.63 ~ 0.68  |
+| RNSimpleOpenvpn | React Native  |
+| --------------- | ------------- |
+| `1.0.0 ~ 1.2.0` | `0.56 ~ 0.66` |
+| `>= 2.0.0`      | `>= 0.63`     |
 
 ## Preview
 
@@ -60,7 +60,7 @@ include ':app'
 
 #### Import jniLibs
 
-Due to file size limitations, jniLibs are too big to be published on npm. Use the assets on [GitHub Releases](https://github.com/ccnnde/react-native-simple-openvpn/releases) instead
+Due to file size limitations, jniLibs are too big to be published on npm. Use the assets on [GitHub Releases](https://github.com/ccnnde/react-native-simple-openvpn/releases/tag/v2.0.0) instead
 
 Download and unzip the resources you need for the corresponding architecture, and put them in `android/app/src/main/jniLibs` (create a new `jniLibs` folder if you don't have one)
 

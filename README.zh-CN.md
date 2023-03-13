@@ -14,10 +14,10 @@ react-native-simple-openvpn 提供了与 OpenVPN 交互的接口
 
 ## 版本
 
-| RNSimpleOpenvpn | React Native |
-| --------------- | ------------ |
-| 1.0.0 ~ 1.2.0   | 0.56 ~ 0.66  |
-| 2.0.0           | 0.63 ~ 0.68  |
+| RNSimpleOpenvpn | React Native  |
+| --------------- | ------------- |
+| `1.0.0 ~ 1.2.0` | `0.56 ~ 0.66` |
+| `>= 2.0.0`      | `>= 0.63`     |
 
 ## 预览
 
@@ -60,7 +60,7 @@ include ':app'
 
 #### 导入 jniLibs
 
-由于存在文件大小的限制，jniLibs 无法随模块一起发布到 npm 上。故使用 [GitHub Releases](https://github.com/ccnnde/react-native-simple-openvpn/releases) 中的 assets 来代替
+由于存在文件大小的限制，jniLibs 无法随模块一起发布到 npm 上。故使用 [GitHub Releases](https://github.com/ccnnde/react-native-simple-openvpn/releases/tag/v2.0.0) 中的 assets 来代替
 
 下载并解压你需要的相应架构的资源，然后将其放入 `android/app/src/main/jniLibs` 中（如果 `jniLibs` 文件夹不存在则手动新建一个）
 
