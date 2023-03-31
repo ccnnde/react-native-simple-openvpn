@@ -21,6 +21,8 @@ If this project has helped you out, please support us with a star 🌟
 | `1.0.0 ~ 1.2.0` | `0.56 ~ 0.66` |
 | `>= 2.0.0`      | `>= 0.63`     |
 
+See [CHANGELOG](CHANGELOG.md) for details
+
 ## Preview
 
 <p>

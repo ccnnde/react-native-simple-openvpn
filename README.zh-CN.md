@@ -21,6 +21,8 @@ react-native-simple-openvpn 提供了与 OpenVPN 交互的接口
 | `1.0.0 ~ 1.2.0` | `0.56 ~ 0.66` |
 | `>= 2.0.0`      | `>= 0.63`     |
 
+详细信息请参考[更改日志](CHANGELOG.md)
+
 ## 预览
 
 <p>
