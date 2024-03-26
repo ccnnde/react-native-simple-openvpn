@@ -90,6 +90,7 @@ object Utils {
                 i.type = "text/plain"
                 supportedMimeTypes.add("text/plain")
             }
+            else -> throw AssertionError()
         }
         val mtm = MimeTypeMap.getSingleton()
         for (ext in extensions) {
