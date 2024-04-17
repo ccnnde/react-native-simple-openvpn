@@ -2,6 +2,10 @@
 
 ## [2.1.1](https://github.com/ccnnde/react-native-simple-openvpn/compare/v2.1.0...v2.1.1) (2024-04-17)
 
+### 🐞 Bug Fixes
+
+* fix(android): fix build issue ([#61](https://github.com/ccnnde/react-native-simple-openvpn/pull/61)) ([3a455fc](https://github.com/ccnnde/react-native-simple-openvpn/commit/3a455fc))
+
 ## [2.1.0](https://github.com/ccnnde/react-native-simple-openvpn/compare/v2.0.0...v2.1.0) (2023-03-31)
 
 
