@@ -8,7 +8,7 @@ I am not sure how long it will work with the free ovpn file. It's better to upda
 > Note that OpenVPN may always wait for the server to respond due to your network.
 
 You can also try to use [docker-openvpn
-](https://github.com/kylemanna/docker-openvpn/blob/master/docs/docker-compose.md) to deploy a VPN service locally.
+](https://github.com/kylemanna/docker-openvpn/blob/master/docs/docker-compose.md) or [openvpn-install](https://github.com/Nyr/openvpn-install) to deploy a VPN service locally.
 
 ## Usage
 
