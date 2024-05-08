@@ -1,7 +1,7 @@
 {
   "name": "react-native-simple-openvpn",
   "title": "React Native Simple Openvpn",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "description": "React Native Open VPN Module",
   "main": "index.js",
   "types": "index.d.ts",
@@ -15,6 +15,9 @@
     "react-native-simple-openvpn.podspec"
   ],
   "scripts": {
+    "release": "dotenv release-it --",
+    "release-dry": "yarn release --dry-run",
+    "pub-dry": "npm publish --dry-run",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-vpn-lib": "yarn build-ics-ovpn; yarn gen-vpn-lib; yarn patch-vpn-lib",
     "build-ics-ovpn": "sh scripts/build-ics-ovpn.sh",
@@ -39,12 +42,32 @@
   "license": "GPL-2.0-or-later",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "favolosoEmoji": {
+    "showEmojiPerCommit": false,
+    "emojis": {
+      "feat": {
+        "emoji": "✨",
+        "heading": "✨ Features"
+      },
+      "fix": {
+        "emoji": "🐞",
+        "heading": "🐞 Bug Fixes"
+      }
+    }
+  },
   "peerDependencies": {
     "react-native": ">=0.63"
   },
   "devDependencies": {
+    "@favoloso/conventional-changelog-emoji": "^0.10.0",
+    "@release-it/conventional-changelog": "^5.1.1",
     "archiver": "^5.3.0",
     "clang-format": "^1.4.0",
-    "prettier": "^2.3.2"
+    "dotenv-cli": "^7.1.0",
+    "prettier": "^2.3.2",
+    "release-it": "^15.9.3"
   }
 }

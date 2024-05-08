@@ -3,6 +3,8 @@
 [![npm latest][version-img]][pkg-url]
 [![download month][dl-month-img]][pkg-url]
 [![download total][dl-total-img]][pkg-url]
+[![PRs welcome][pr-img]][pr-url]
+[![all contributors][contributors-img]](#contributors)
 ![platforms][platform-img]
 [![GNU General Public License][license-img]](LICENSE)
 
@@ -14,10 +16,12 @@ If this project has helped you out, please support us with a star 🌟
 
 ## Versions
 
-| RNSimpleOpenvpn | React Native |
-| --------------- | ------------ |
-| 1.0.0 ~ 1.2.0   | 0.56 ~ 0.66  |
-| 2.0.0           | 0.63 ~ 0.68  |
+| RNSimpleOpenvpn | React Native  |
+| --------------- | ------------- |
+| `1.0.0 ~ 1.2.0` | `0.56 ~ 0.66` |
+| `>= 2.0.0`      | `>= 0.63`     |
+
+See [CHANGELOG](CHANGELOG.md) for details
 
 ## Preview
 
@@ -60,7 +64,7 @@ include ':app'
 
 #### Import jniLibs
 
-Due to file size limitations, jniLibs are too big to be published on npm. Use the assets on [GitHub Releases](https://github.com/ccnnde/react-native-simple-openvpn/releases) instead
+Due to file size limitations, jniLibs are too big to be published on npm. Use the assets on [GitHub Releases](https://github.com/ccnnde/react-native-simple-openvpn/releases/tag/v2.0.0) instead
 
 Download and unzip the resources you need for the corresponding architecture, and put them in `android/app/src/main/jniLibs` (create a new `jniLibs` folder if you don't have one)
 
@@ -203,6 +207,16 @@ The following items were used in this project
 - [x] Resolve RN 0.65 warning
 - [x] Upgrade to the latest Android OpenVPN library
 
+## Star History
+
+[![star history chart][star-history-img]][star-history-url]
+
+## Contributors
+
+Thanks to all the people who contribute
+
+[![contributors list][contributors-list-img]][contributors-url]
+
 ## License
 
 [GPLv2](LICENSE) © Nor Cod
@@ -215,5 +229,12 @@ The following items were used in this project
 [version-img]: https://img.shields.io/npm/v/react-native-simple-openvpn?color=deepgreen&style=flat-square
 [dl-month-img]: https://img.shields.io/npm/dm/react-native-simple-openvpn?style=flat-square
 [dl-total-img]: https://img.shields.io/npm/dt/react-native-simple-openvpn?label=total&style=flat-square
+[pr-img]: https://img.shields.io/badge/PRs-welcome-blue.svg?style=flat-square
+[pr-url]: https://makeapullrequest.com
+[contributors-img]: https://img.shields.io/github/contributors/ccnnde/react-native-simple-openvpn?color=blue&style=flat-square
+[contributors-url]: https://github.com/ccnnde/react-native-simple-openvpn/graphs/contributors
+[contributors-list-img]: https://contrib.rocks/image?repo=ccnnde/react-native-simple-openvpn
 [platform-img]: https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey?style=flat-square
+[star-history-img]: https://api.star-history.com/svg?repos=ccnnde/react-native-simple-openvpn&type=Date
+[star-history-url]: https://star-history.com/#ccnnde/react-native-simple-openvpn&Date
 [license-img]: https://img.shields.io/badge/license-GPL%20v2-orange?style=flat-square
