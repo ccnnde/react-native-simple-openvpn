@@ -92,6 +92,6 @@ Copy the contents of the `PacketTunnelProvider.h/m` file in the `apple/` directo
 
 - If you want to use the `Swift` version of `Network Extension`, please refer to [OpenVPNAdapter usage](https://github.com/ss-abramchuk/OpenVPNAdapter#usage)
 - The `version` and `build` of the container App should be consistent with the `Network Extension`, otherwise a warning will be generated when the app is uploaded to the App Store
-- The `iOS version` in the `Deployment info` of `Network Extension` should be set to the appropriate value, otherwise the device may not be able to open the VPN properly.
+- The `iOS version` in the `Deployment info` of `Network Extension` should be set to the appropriate value (**It’s best to keep it consistent with the container App's `Minimum Deployments`**), otherwise the device may not be able to open the VPN properly
 
 ![ios-id-deploy](../.github/images/ios-id-deploy.png)

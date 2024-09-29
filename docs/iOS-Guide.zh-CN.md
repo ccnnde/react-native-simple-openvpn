@@ -91,7 +91,7 @@
 ## 注意
 
 - 如果你想使用 `Swift` 版本的 `Network Extension`，请参考 [OpenVPNAdapter usage](https://github.com/ss-abramchuk/OpenVPNAdapter#usage)
-- 容器 App 的`version` 和 `build` 应该与 `Network Extension` 的保持一致, 否则在应用上传至 App Store 时会产生警告
-- `Network Extension` 的 `Deployment info` 的 `iOS version` 需设置合适的值，否则设备可能无法正常开启 VPN
+- 容器 App 的 `version` 和 `build` 应该与 `Network Extension` 的保持一致, 否则在应用上传至 App Store 时会产生警告
+- `Network Extension` 的 `Deployment info` 的 `iOS version` 需设置合适的值（**最好与容器 App 的 `Minimum Deployments` 保持一致**），否则设备可能无法正常开启 VPN
 
 ![ios-id-deploy](../.github/images/ios-id-deploy.png)
