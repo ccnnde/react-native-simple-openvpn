@@ -19,7 +19,8 @@ react-native-simple-openvpn 提供了与 OpenVPN 交互的接口
 | RNSimpleOpenvpn | React Native  |
 | --------------- | ------------- |
 | `1.0.0 ~ 1.2.0` | `0.56 ~ 0.66` |
-| `>= 2.0.0`      | `>= 0.63`     |
+| `2.0.0 ~ 2.1.1` | `0.63 ~ 0.71` |
+| `>= 2.1.2`      | `>= 0.72`     |
 
 详细信息请参考[更改日志](CHANGELOG.md)
 
@@ -60,6 +61,19 @@ rootProject.name = 'example'
 + project(':vpnLib').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-simple-openvpn/vpnLib')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
+```
+
+如果你的 React Native 版本大于等于 0.74，在项目的 `android/app/build.gradle` 中添加以下代码：
+
+```diff
+android {
+    // ...
++   packaging {
++       jniLibs {
++           useLegacyPackaging = true
++       }
++   }
+}
 ```
 
 #### 导入 jniLibs

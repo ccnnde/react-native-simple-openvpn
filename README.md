@@ -19,7 +19,8 @@ If this project has helped you out, please support us with a star 🌟
 | RNSimpleOpenvpn | React Native  |
 | --------------- | ------------- |
 | `1.0.0 ~ 1.2.0` | `0.56 ~ 0.66` |
-| `>= 2.0.0`      | `>= 0.63`     |
+| `2.0.0 ~ 2.1.1` | `0.63 ~ 0.71` |
+| `>= 2.1.2`      | `>= 0.72`     |
 
 See [CHANGELOG](CHANGELOG.md) for details
 
@@ -60,6 +61,19 @@ rootProject.name = 'example'
 + project(':vpnLib').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-simple-openvpn/vpnLib')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
+```
+
+If your React Native version is 0.74 or higher, add the following to `android/app/build.gradle` :
+
+```diff
+android {
+    // ...
++   packaging {
++       jniLibs {
++           useLegacyPackaging = true
++       }
++   }
+}
 ```
 
 #### Import jniLibs
