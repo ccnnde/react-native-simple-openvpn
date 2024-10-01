@@ -65,6 +65,9 @@ android {
             dimension "implementation"
         }
     }
+    buildFeatures {
+        aidl true
+    }
     sourceSets {
         main {
             java {
@@ -77,6 +80,11 @@ android {
                 srcDirs = [
                     'src/main/res',
                     'src/ui/res'
+                ]
+            }
+            aidl {
+                srcDirs = [
+                    'src/main/aidl',
                 ]
             }
         }
