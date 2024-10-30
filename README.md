@@ -20,7 +20,8 @@ If this project has helped you out, please support us with a star 🌟
 | --------------- | ------------- |
 | `1.0.0 ~ 1.2.0` | `0.56 ~ 0.66` |
 | `2.0.0 ~ 2.1.1` | `0.63 ~ 0.71` |
-| `>= 2.1.2`      | `>= 0.72`     |
+| `2.1.2`         | `0.72`        |
+| `>= 2.1.3`      | `>= 0.73`     |
 
 See [CHANGELOG](CHANGELOG.md) for details
 
