@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.3](https://github.com/ccnnde/react-native-simple-openvpn/compare/v2.1.2...v2.1.3) (2024-10-30)
+
+
+### 🐞 Bug Fixes
+
+* fix(android): fix android 14 crash issue ([3d51c54](https://github.com/ccnnde/react-native-simple-openvpn/commit/3d51c54))
+
 ## [2.1.2](https://github.com/ccnnde/react-native-simple-openvpn/compare/v2.1.1...v2.1.2) (2024-09-29)
 
 
