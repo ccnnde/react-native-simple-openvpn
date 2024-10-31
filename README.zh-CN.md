@@ -52,6 +52,14 @@ yarn add react-native-simple-openvpn
 react-native link react-native-simple-openvpn
 ```
 
+### Expo
+
+如果你的项目基于 [Expo](https://expo.dev/)，你应该在本地创建一个 **development build** 来使用这个模块，然后根据 README 进行配置
+
+<https://docs.expo.dev/get-started/set-up-your-environment/?mode=development-build&buildEnv=local>
+
+> Any library that is compatible with React Native is compatible with the Expo project when you create a **development build**. However, it may not be compatible with the [Expo Go](https://expo.dev/go) app
+
 ### Android
 
 在项目的 `android/settings.gradle` 中添加以下代码：
@@ -64,6 +72,8 @@ apply from: file("../node_modules/@react-native-community/cli-platform-android/n
 include ':app'
 ```
 
+#### useLegacyPackaging
+
 如果你的 React Native 版本大于等于 0.74，在项目的 `android/app/build.gradle` 中添加以下代码：
 
 ```diff
@@ -74,6 +84,20 @@ android {
 +           useLegacyPackaging = true
 +       }
 +   }
+}
+```
+
+但是如果你的项目基于 [Expo](https://expo.dev/) 且 RN 版本大于等于 0.74，请使用以下修改
+
+```diff
+android {
+    // ...
+    packagingOptions {
+        jniLibs {
+-           useLegacyPackaging (findProperty('expo.useLegacyPackaging')?.toBoolean() ?: false)
++           useLegacyPackaging true
+        }
+    }
 }
 ```
 

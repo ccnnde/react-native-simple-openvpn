@@ -52,6 +52,14 @@ From react-native 0.60 autolinking will take care of the link step
 react-native link react-native-simple-openvpn
 ```
 
+### Expo
+
+If your project is based on [Expo](https://expo.dev/), you should create a **development build** locally to use this module, and then configure it according to the README
+
+<https://docs.expo.dev/get-started/set-up-your-environment/?mode=development-build&buildEnv=local>
+
+> Any library that is compatible with React Native is compatible with the Expo project when you create a **development build**. However, it may not be compatible with the [Expo Go](https://expo.dev/go) app
+
 ### Android
 
 Add the following to `android/settings.gradle` :
@@ -64,6 +72,8 @@ apply from: file("../node_modules/@react-native-community/cli-platform-android/n
 include ':app'
 ```
 
+#### useLegacyPackaging
+
 If your React Native version is 0.74 or higher, add the following to `android/app/build.gradle` :
 
 ```diff
@@ -74,6 +84,20 @@ android {
 +           useLegacyPackaging = true
 +       }
 +   }
+}
+```
+
+But if your project is based on [Expo](https://expo.dev/) and RN >= 0.74, please use the following modifications instead
+
+```diff
+android {
+    // ...
+    packagingOptions {
+        jniLibs {
+-           useLegacyPackaging (findProperty('expo.useLegacyPackaging')?.toBoolean() ?: false)
++           useLegacyPackaging true
+        }
+    }
 }
 ```
 
