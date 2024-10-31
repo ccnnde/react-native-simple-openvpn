@@ -60,6 +60,8 @@ react-native link react-native-simple-openvpn
 
 > Any library that is compatible with React Native is compatible with the Expo project when you create a **development build**. However, it may not be compatible with the [Expo Go](https://expo.dev/go) app
 
+Android 示例请参考该仓库: <https://github.com/ccnnde/rnovpn-expo-example>
+
 ### Android
 
 在项目的 `android/settings.gradle` 中添加以下代码：
@@ -87,18 +89,11 @@ android {
 }
 ```
 
-但是如果你的项目基于 [Expo](https://expo.dev/) 且 RN 版本大于等于 0.74，请使用以下修改
+但是如果你的项目基于 [Expo](https://expo.dev/) 且 RN 版本大于等于 0.74，请按以下内容修改 `android/gradle.properties` 文件
 
 ```diff
-android {
-    // ...
-    packagingOptions {
-        jniLibs {
--           useLegacyPackaging (findProperty('expo.useLegacyPackaging')?.toBoolean() ?: false)
-+           useLegacyPackaging true
-        }
-    }
-}
+-expo.useLegacyPackaging=false
++expo.useLegacyPackaging=true
 ```
 
 #### 导入 jniLibs

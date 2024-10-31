@@ -60,6 +60,8 @@ If your project is based on [Expo](https://expo.dev/), you should create a **dev
 
 > Any library that is compatible with React Native is compatible with the Expo project when you create a **development build**. However, it may not be compatible with the [Expo Go](https://expo.dev/go) app
 
+There is an example project for Android only, available at Expo: <https://github.com/ccnnde/rnovpn-expo-example>
+
 ### Android
 
 Add the following to `android/settings.gradle` :
@@ -87,18 +89,11 @@ android {
 }
 ```
 
-But if your project is based on [Expo](https://expo.dev/) and RN >= 0.74, please use the following modifications instead
+But if your project is based on [Expo](https://expo.dev/) and RN >= 0.74, please use the following modifications to the `android/gradle.properties` file instead
 
 ```diff
-android {
-    // ...
-    packagingOptions {
-        jniLibs {
--           useLegacyPackaging (findProperty('expo.useLegacyPackaging')?.toBoolean() ?: false)
-+           useLegacyPackaging true
-        }
-    }
-}
+-expo.useLegacyPackaging=false
++expo.useLegacyPackaging=true
 ```
 
 #### Import jniLibs
